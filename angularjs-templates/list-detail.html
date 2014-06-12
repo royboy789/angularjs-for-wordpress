@@ -1,0 +1,41 @@
+<!--
+post: {
+	ID
+	author: {
+	
+	}
+	comment_status
+	content
+	date
+	date_gmt
+	date_tz
+	excerpt
+	featured_image
+	format
+	guid
+	link
+	menu_order
+	meta: {
+	
+	}
+	modified
+	modified_gmt
+	modified_tz
+	parent
+	ping_status
+	slug
+	status
+	sticky
+	terms: {
+	
+	}
+	title
+	type
+}
+-->
+<article>
+	<h2>{{post.title}}</h2>
+	<div ng-bind-html="post.content | unsafe"></div>
+	<a href="{{post.link}}">Read More...</a>
+	<hr />
+</article>
