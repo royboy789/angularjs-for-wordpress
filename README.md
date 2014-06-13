@@ -19,9 +19,9 @@ Directives are HTML elements that act as wrappers for AngularJS code. Functional
   
 Example: `<ng-posts></ng-posts>`
   
-* ng-posts - used to display a list of posts (ng-post attributes)[http://roysivan.com/angularjs-for-wordpress/directives/ng-posts/]
-* ng-post - used to display a single post or page (ng-page attributes)[http://roysivan.com/angularjs-for-wordpress/directives/ng-post/]
-* ng-new-post - used to display a form that creates a post (ng-new-post attributes)[http://roysivan.com/angularjs-for-wordpress/directives/ng-new-post/]
+* ng-posts - used to display a list of posts [ng-post attributes](http://roysivan.com/angularjs-for-wordpress/directives/ng-posts/)
+* ng-post - used to display a single post or page [ng-page attributes](http://roysivan.com/angularjs-for-wordpress/directives/ng-post/)
+* ng-new-post - used to display a form that creates a post [ng-new-post attributes](http://roysivan.com/angularjs-for-wordpress/directives/ng-new-post/)
   
 
 Install Instructions
