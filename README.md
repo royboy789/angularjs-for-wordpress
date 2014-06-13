@@ -32,3 +32,5 @@ Install Instructions
 + Activate AngularJS for WordPress
 + Read [docs](http://www.roysivan.com/angularjs-for-wordpress) for how to use directives and templates
   
+You can also download from [WordPress](http://wordpress.org/plugins/angularjs-for-wp/)
+  
