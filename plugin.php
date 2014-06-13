@@ -56,7 +56,7 @@ function apiCheck(){
 	}
 }
 function apiError(){
-	echo '<div class="error"><p><strong>JSON REST API</strong> must be installed and activated for this theme to work properly - <a href="https://wordpress.org/plugins/json-rest-api/" target="_blank">Install Plugin</a></p></div>';
+	echo '<div class="error"><p><strong>JSON REST API</strong> must be installed and activated for <strong>AngularJS for WP</strong> to work properly - <a href="https://wordpress.org/plugins/json-rest-api/" target="_blank">Install Plugin</a></p></div>';
 }
 
 add_action('admin_init', 'apiCheck');
