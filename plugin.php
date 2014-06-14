@@ -11,6 +11,7 @@
 
 require_once('includes/metaBox.php');
 require_once('includes/contentFilter.php');
+require_once('includes/shortcodes.php');
 
 define('WordPressAngularJS', '0.1'); 
 
