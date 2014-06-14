@@ -8,6 +8,10 @@
  * Author URI: http://www.roysivan.com
  * License: GPL2
  */
+
+require_once('includes/metaBox.php');
+require_once('includes/contentFilter.php');
+
 define('WordPressAngularJS', '0.1'); 
 
 class WordPressAngularJS {
@@ -31,7 +35,8 @@ class WordPressAngularJS {
 			$template_directory = array(
 				'list_detail' => plugin_dir_url( __FILE__ ).'angularjs-templates/list-detail.html',
 				'single_detail' => plugin_dir_url( __FILE__ ).'angularjs-templates/single-detail.html', 
-				'new_post' => plugin_dir_url( __FILE__ ).'angularjs-templates/new-post.html'
+				'new_post' => plugin_dir_url( __FILE__ ).'angularjs-templates/new-post.html',
+				'post_content' => plugin_dir_url( __FILE__ ).'angularjs-templates/post-content.html',
 			);
 			
 			// TEMPLATE OVERRIDES 
@@ -45,6 +50,9 @@ class WordPressAngularJS {
 			if(file_exists(get_template_directory().'/angularjs-templates/new-post.html')) {
 				$template_directory['new_post'] = get_bloginfo('template_directory').'/angularjs-templates/new-post.html';
 			}
+			if(file_exists(get_template_directory().'/angularjs-templates/post-content.html')) {
+				$template_directory['new_post'] = get_bloginfo('template_directory').'/angularjs-templates/post-content.html';
+			}
 		
 		// Localize Variables
 		wp_localize_script( 'angular-core', 'wpAngularVars', array( 'site' => get_bloginfo('wpurl'), 'base' => json_url(), 'nonce' => wp_create_nonce( 'wp_json' ), 'template_directory' => $template_directory ) );
@@ -56,7 +64,7 @@ function apiCheck(){
 	}
 }
 function apiError(){
-	echo '<div class="error"><p><strong>JSON REST API</strong> must be installed and activated for <strong>AngularJS for WP</strong> to work properly - <a href="https://wordpress.org/plugins/json-rest-api/" target="_blank">Install Plugin</a></p></div>';
+	echo '<div class="error"><p><strong>JSON REST API</strong> must be installed and activated for this theme to work properly - <a href="https://wordpress.org/plugins/json-rest-api/" target="_blank">Install Plugin</a></p></div>';
 }
 
 add_action('admin_init', 'apiCheck');
