@@ -23,6 +23,17 @@ Example: `<ng-posts></ng-posts>`
 * ng-post - used to display a single post or page [ng-page attributes](http://roysivan.com/angularjs-for-wordpress/directives/ng-post/)
 * ng-new-post - used to display a form that creates a post [ng-new-post attributes](http://roysivan.com/angularjs-for-wordpress/directives/ng-new-post/)
   
+Shortcodes
+------------
+Shortcodes are an easy way to add any custom functionality to your post or page without extra coding.
+Included in the plugin are shortcodes to input the AngularJS directives, so you don’t have to fuss with the code.  
+  
+__Available Shortcodes__
+* [ng-post id="#"]
+* [ng-posts]
+  
+Read full [shortcode documentation](http://roysivan.com/angularjs-for-wordpress/shortcodes/) for full attribute list
+  
 
 Install Instructions
 =====================
