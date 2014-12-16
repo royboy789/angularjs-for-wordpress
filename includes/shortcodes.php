@@ -9,7 +9,8 @@ function ngPosts( $atts ) {
 		'post_order' => '',
 		'post_orderby' => '',
 		'post_type' => 'post',
-		'search' => ''
+		'search' => '',
+		'per_page' => '',
 	), $atts );
 	
 	$vars = '';
