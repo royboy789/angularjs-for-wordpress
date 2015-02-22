@@ -12,7 +12,8 @@ app.directive('ngPosts', ['$http', '$rootScope', function($http, $rootScope){
 			orderBy: '@postOrderby',
 			search: '@search',
 			postType: '@postType',
-			perPage: '@perPage'
+			perPage: '@perPage',
+			page: '@page'
 		},
 		controller: ['$scope', '$http', function($scope, $http) {
 			$scope.getPosts = function(filters, postType, page){
