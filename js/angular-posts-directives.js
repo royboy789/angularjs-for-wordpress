@@ -15,7 +15,7 @@ app.directive('ngPosts', ['$http', '$rootScope', function($http, $rootScope){
 			perPage: '@perPage'
 		},
 		controller: ['$scope', '$http', function($scope, $http) {
-			$scope.getPosts = function(filters, postType){
+			$scope.getPosts = function(filters, postType, page){
 				$scope.baseURL = wpAngularVars.base + '/posts?';
 
 				if(filters.length > 0){
@@ -24,8 +24,11 @@ app.directive('ngPosts', ['$http', '$rootScope', function($http, $rootScope){
 					})
 				}
 				if(postType){
-					$scope.baseURL = $scope.baseURL + 'type[]=' + postType;
+					$scope.baseURL = $scope.baseURL + '&type[]=' + postType;
 				}
+                                if(page){
+                                        $scope.baseURL = $scope.baseURL + '&page=' + page;
+                                }
 				$http.get($scope.baseURL).then(function(res){
 				 	$scope.postsD = res.data;
 				});
@@ -44,9 +47,8 @@ app.directive('ngPosts', ['$http', '$rootScope', function($http, $rootScope){
 			if($scope.orderBy) { $scope.filters.push({'filter': 'orderby', 'value': $scope.orderBy }); }
 			if($scope.search) { $scope.filters.push({'filter': 's', 'value': $scope.search}); }
 			if($scope.perPage) { $scope.filters.push({'filter': 'posts_per_page', 'value': $scope.perPage}); }
-			if($scope.page) { $scope.filters.push({'filter': 'posts_per_page', 'value': $scope.page}); }
 					
-			$scope.getPosts($scope.filters, $scope.postType);
+			$scope.getPosts($scope.filters, $scope.postType, $scope.page);
 		},
 		template: '<div class="ngListWrapper" ng-repeat="post in postsD"><ng-include src="\''+wpAngularVars.template_directory.list_detail+'\'"></ng-include></div>'
 	}
