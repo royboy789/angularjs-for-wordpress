@@ -46,13 +46,13 @@ class WordPressAngularJS {
 			}
 			
 			if(file_exists(get_template_directory().'/angularjs-templates/single-detail.html')) {
-				$template_directory['list_detail'] = get_bloginfo('template_directory').'/angularjs-templates/single-detail.html';
+				$template_directory['single_detail'] = get_bloginfo('template_directory').'/angularjs-templates/single-detail.html';
 			}
 			if(file_exists(get_template_directory().'/angularjs-templates/new-post.html')) {
 				$template_directory['new_post'] = get_bloginfo('template_directory').'/angularjs-templates/new-post.html';
 			}
 			if(file_exists(get_template_directory().'/angularjs-templates/post-content.html')) {
-				$template_directory['new_post'] = get_bloginfo('template_directory').'/angularjs-templates/post-content.html';
+				$template_directory['post_content'] = get_bloginfo('template_directory').'/angularjs-templates/post-content.html';
 			}
 		
 		// Localize Variables
