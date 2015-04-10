@@ -1,0 +1,17 @@
+<!--
+	ng-new-post inputs
+	WARNING: Do not change the name attribute for the inputs or it will break the form
+-->
+<div class="form-group">
+	<input name="postTitle" placeholder="Post Title" class="form-control" />
+</div>
+<div class="form-group" ng-show="tax.terms.length" ng-repeat="tax in taxonomies">
+	<label>{{tax.name}}</label><br/>
+	<select ng-model="chosenTax[tax.slug]" data-tax="{{tax.slug}}" class="form-control" multiple="multiple">
+		<option ng-repeat="term in tax.terms" value="{{term.ID}}">{{term.name}}</option>
+	</select>
+</div>
+<div class="form-group" >
+	<textarea name="postContent" placeholder="Post Content" class="form-control"></textarea>
+</div>
+<input type="submit" value="Create Post">
