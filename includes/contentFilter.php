@@ -9,7 +9,7 @@ function angularFilter( $content ) {
 	$meta = intval($meta);
 
 	if($meta){
-		$content = '<ng-post-content id="'.$post->ID.'"></ng-post-content>';
+		$content = '<div ng-app="wpAngularPlugin"><ng-post-content id="'.$post->ID.'"></ng-post-content></div>';
 	}
 
 	return $content;
