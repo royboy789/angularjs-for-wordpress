@@ -12,10 +12,11 @@ angular_app.directive('ngPosts', ['$http', '$rootScope', function($http, $rootSc
 			orderBy: '@postOrderby',
 			search: '@search',
 			postType: '@postType',
-			perPage: '@perPage'
+			perPage: '@perPage',
+			page: '@page'
 		},
 		controller: ['$scope', '$http', function($scope, $http) {
-			$scope.getPosts = function(filters, postType){
+			$scope.getPosts = function(filters, postType, page){
 				$scope.baseURL = wpAngularVars.base + '/posts?';
 
 				if(filters.length > 0){
@@ -24,8 +25,11 @@ angular_app.directive('ngPosts', ['$http', '$rootScope', function($http, $rootSc
 					})
 				}
 				if(postType){
-					$scope.baseURL = $scope.baseURL + 'type[]=' + postType;
+					$scope.baseURL = $scope.baseURL + '&type[]=' + postType;
 				}
+                if(page){
+                        $scope.baseURL = $scope.baseURL + '&page=' + page;
+                }
 				$http.get($scope.baseURL).then(function(res){
 				 	$scope.postsD = res.data;
 				});
@@ -44,8 +48,8 @@ angular_app.directive('ngPosts', ['$http', '$rootScope', function($http, $rootSc
 			if($scope.orderBy) { $scope.filters.push({'filter': 'orderby', 'value': $scope.orderBy }); }
 			if($scope.search) { $scope.filters.push({'filter': 's', 'value': $scope.search}); }
 			if($scope.perPage) { $scope.filters.push({'filter': 'posts_per_page', 'value': $scope.perPage}); }
-			if($scope.page) { $scope.filters.push({'filter': 'posts_per_page', 'value': $scope.page}); }
-					
+			if($scope.page) { $scope.filters.push({'filter': 'posts_per_page', 'value': $scope.page}); }	
+			
 			$scope.getPosts($scope.filters, $scope.postType);
 		},
 		template: '<div class="ngListWrapper" ng-repeat="post in postsD"><ng-include src="\''+wpAngularVars.template_directory.list_detail+'\'"></ng-include></div>'
@@ -78,21 +82,13 @@ angular_app.directive('ngPostContent', ['$http', '$rootScope', function($http, $
 		transclude: true,
 		restrict: 'E',
 		scope: {
-			id: '='
+			id: '=',
+			content: '@'
 		},
-		controller: ['$scope', '$http', function($scope, $http) {
-      		$scope.getPost = function(id) {
-	    	$http.get(wpAngularVars.base + '/posts/' + id + '?context=edit&_wp_json_nonce=' + wpAngularVars.nonce).then(function(res){
-				$scope.post = res.data;
-			});
-      	}
-    }],
-    link: function($scope, $elm, attrs, ctrl){
-    	$scope.getPost($scope.id);
-    },
 		template: '<div class="ngSingleWrapper"><ng-include src="\''+wpAngularVars.template_directory.post_content+'\'"></ng-include></div>'
 	}
 }]);
+
 
 angular_app.directive('ngNewPost', ['$http', '$rootScope', function($http, $rootScope){
 	return {

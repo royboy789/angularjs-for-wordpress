@@ -3,13 +3,13 @@
 function angularFilter( $content ) {
 	global $post;
 	
-	$content = '<div ng-app="wpAngularPlugin">'.$content.'</div>';
-	
 	$meta = get_post_meta($post->ID, 'angularjsLoad', true);
 	$meta = intval($meta);
 
 	if($meta){
-		$content = '<div ng-app="wpAngularPlugin"><ng-post-content id="'.$post->ID.'"></ng-post-content></div>';
+		$content = '<div ng-app="wpAngularPlugin"><ng-post-content id="'.$post->ID.'" content="'.$content.'"></ng-post-content></div>';
+	} else {
+		$content = '<div ng-app="wpAngularPlugin">'.$content.'</div>';
 	}
 
 	return $content;

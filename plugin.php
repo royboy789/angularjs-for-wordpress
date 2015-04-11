@@ -25,6 +25,7 @@ class WordPressAngularJS {
 	function angularScripts() {
 		// Angular Core
 		wp_enqueue_script('angular-core', plugin_dir_url( __FILE__ ).'js/angular.min.js', array('jquery'), null, false);
+		wp_enqueue_script('angular-sanitize', plugin_dir_url( __FILE__ ).'js/angular-sanitize.min.js', array('jquery'), null, false);
 		wp_enqueue_script('angular-app', plugin_dir_url( __FILE__ ).'js/angular-app.js', array('jquery'), null, false);
 
 		// Angular Factories

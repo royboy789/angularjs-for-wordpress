@@ -14,17 +14,15 @@ AngularJS for WordPress allows you to easily leverage the power of AngularJS and
   
 AngularJS for WordPress was created to help anyone leverage the power of AngularJS and easily add it into their own theme.  
   
-AngularJS is a client-side template framework that lets you extend HTML vocabulary for your applications. It has a markup more similar to what HTML used to be. HTML its not a dynamic language
-by itself, with AngularJS it is.
+AngularJS is a client-side template framework that lets you extend HTML vocabulary for your applications. It has a markup more similar to what HTML used to be. HTML its not a dynamic language by itself, with AngularJS it is.
   
 AngularJS for WordPress includes several directives (html elements) that will help you easily add in a block for a single post/page or a list. More directives will be added in.
 
 WordPress shortcodes for directives are also included to avoid any confusion with code  
   
 For even easier use for specific pages a new post meta box has been added. If selected the AngularJS directive will take over loading the content of the page client-side. This feature uses the post-content.html template.
-  
-View [documentation](http://www.roysivan.com/angularjs-for-wordpress) for how to utilize the directives and shortcodes
 
+View [documentation](http://www.roysivan.com/angularjs-for-wordpress) for how to utilize the directives and shortcodes
 
 == Installation ==
 
@@ -66,8 +64,5 @@ then renderring that to HTML using the client's machine. This will speed up your
 = 1.1 =
 * Added Taxonomy and post type to new post creation
 
-=1.1.2=
+= 1.2 =
 * Fix for new post template [fixing issue](https://wordpress.org/support/topic/template-override-for-new-posthtml-appears-to-not-be-working?replies=2#post-6635530)
-  
- =1.2=
- * No more global Angular App - redefined app to be more modular friendly
