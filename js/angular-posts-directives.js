@@ -123,7 +123,7 @@ angular_app.directive('ngNewPost', ['$http', '$rootScope', function($http, $root
 	    			title: form.find('input[name="postTitle"]').val(),
 	    			content_raw: form.find('textarea[name="postContent"]').val(),
 	    			status: 'publish',
-	    			post_type: $scope.postType,
+	    			type: $scope.postType,
 	    			post_taxonomies: []
 	    		}
 	    		form.find('select').each(function(key, value) { 
