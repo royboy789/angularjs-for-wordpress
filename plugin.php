@@ -43,18 +43,18 @@ class WordPressAngularJS {
 		);
 
 		// TEMPLATE OVERRIDES
-		if(file_exists(get_template_directory().'/angularjs-templates/list-detail.html')) {
-			$template_directory['list_detail'] = get_bloginfo('template_directory').'/angularjs-templates/list-detail.html';
+		if(file_exists(get_stylesheet_directory().'/angularjs-templates/list-detail.html')) {
+			$template_directory['list_detail'] = get_stylesheet_directory_uri().'/angularjs-templates/list-detail.html';
 		}
 
-		if(file_exists(get_template_directory().'/angularjs-templates/single-detail.html')) {
-			$template_directory['list_detail'] = get_bloginfo('template_directory').'/angularjs-templates/single-detail.html';
+		if(file_exists(get_stylesheet_directory().'/angularjs-templates/single-detail.html')) {
+			$template_directory['single_detail'] = get_stylesheet_directory_uri().'/angularjs-templates/single-detail.html';
 		}
-		if(file_exists(get_template_directory().'/angularjs-templates/new-post.html')) {
-			$template_directory['new_post'] = get_bloginfo('template_directory').'/angularjs-templates/new-post.html';
+		if(file_exists(get_stylesheet_directory().'/angularjs-templates/new-post.html')) {
+			$template_directory['new_post'] = get_stylesheet_directory_uri().'/angularjs-templates/new-post.html';
 		}
-		if(file_exists(get_template_directory().'/angularjs-templates/post-content.html')) {
-			$template_directory['post_content'] = get_bloginfo('template_directory').'/angularjs-templates/post-content.html';
+		if(file_exists(get_stylesheet_directory().'/angularjs-templates/post-content.html')) {
+			$template_directory['post_content'] = get_stylesheet_directory_uri().'/angularjs-templates/post-content.html';
 		}
 
 		// Localize Variables
