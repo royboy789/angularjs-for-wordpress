@@ -5,7 +5,8 @@ function angularFilter( $content ) {
 	
 	$meta = get_post_meta($post->ID, 'angularjsLoad', true);
 	$meta = intval($meta);
-
+	$content = str_replace('"', '\'', $content );
+			
 	if($meta){
 		$content = '<div ng-app="wpAngularPlugin"><ng-post-content id="'.$post->ID.'" content="'.$content.'"></ng-post-content></div>';
 	} else {

@@ -3,7 +3,7 @@
  * Plugin Name: AngularJS for WordPress
  * Plugin URI: http://www.roysivan.com/angularjs-for-wordpress
  * Description: This plugin will allow you to easily load WordPress content client-side using AngularJS. JSON REST API required.
- * Version: 1.2
+ * Version: 1.2.1
  * Author: Roy Sivan
  * Author URI: http://www.roysivan.com
  * License: GPL2
@@ -26,7 +26,9 @@ class WordPressAngularJS {
 		// Angular Core
 		wp_enqueue_script('angular-core', plugin_dir_url( __FILE__ ).'js/angular.min.js', array('jquery'), null, false);
 		wp_enqueue_script('angular-sanitize', plugin_dir_url( __FILE__ ).'js/angular-sanitize.min.js', array('jquery'), null, false);
-		wp_enqueue_script('angular-app', plugin_dir_url( __FILE__ ).'js/angular-app.js', array('jquery'), null, false);
+		wp_enqueue_script('html-janitor', plugin_dir_url( __FILE__ ).'js/html-janitor.js', array('jquery'), null, false);
+		
+		wp_enqueue_script('angular-app', plugin_dir_url( __FILE__ ).'js/angular-app.js', array('html-janitor'), null, false);
 
 		// Angular Factories
 		wp_enqueue_script('angular-factories', plugin_dir_url( __FILE__ ).'js/angular-factories.js', array('angular-app'), null, false);

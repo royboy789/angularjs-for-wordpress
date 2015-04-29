@@ -35,7 +35,7 @@ post: {
 -->
 <article>
 	<h2>{{post.title}}</h2>
-	<div ng-bind-html="post.content | unsafe"></div>
+	<div ng-bind-html="post.content | sanitize"></div>
 	<a href="{{post.link}}">Read More...</a>
 	<hr />
 </article>

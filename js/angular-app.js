@@ -1,9 +1,51 @@
 var angular_app = angular.module('wpAngularPlugin', ['ngSanitize']);
 
-angular_app.filter('unsafe', function($sce) {
-    return function(val) {
-	    if( $sce.trustAsHtml(val) )
-        	return $sce.trustAsHtml(val).toString();
+angular_app.filter('unsafe', function ($sce) {
+    return function (val) {
+        return $sce.trustAsHtml(val);
+    };
+});
+
+var janitor = new HTMLJanitor({
+    tags: {
+	    div: {
+		    id: true,
+		    class: true
+	    },
+        p: {
+	        id: true,
+	        class: true
+        },
+        code: {},
+        pre: {},
+        // TODO: Map b => strong
+        strong: {},
+        b: {},
+        // TODO: Map em => i
+        em: {},
+        i: {},
+        // TODO: Map strike => del
+        strike: {},
+        del: {},
+        a: { href: true },
+        ul: {},
+        ol: {},
+        li: {},
+        blockquote: {},
+        h1: {},
+        h2: {},
+        h3: {},
+        h4: {},
+        h5: {},
+        h6: {},
+        sub: {},
+        sup: {}
+    }
+});
+
+angular_app.filter('sanitize', function (unsafeFilter) {
+    return function (val) {
+        return unsafeFilter(janitor.clean(val));
     };
 });
 
