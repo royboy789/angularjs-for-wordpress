@@ -4,6 +4,10 @@ AngularJS for WordPress
 What is it?
 ------------
 AngularJS for WordPress is a plugin to help anyone easily leverage AngularJS in their theme
+
+V2
+---
+Now works with __JSON REST API v2__
   
   
 Features
