@@ -3,7 +3,7 @@
  * Plugin Name: AngularJS for WordPress
  * Plugin URI: http://www.roysivan.com/angularjs-for-wordpress
  * Description: This plugin will allow you to easily load WordPress content client-side using AngularJS. JSON REST API required.
- * Version: 1.2.2
+ * Version: 2.0.0
  * Author: Roy Sivan
  * Author URI: http://www.roysivan.com
  * License: GPL2
@@ -65,7 +65,7 @@ class WordPressAngularJS {
 			'wpAngularVars', 
 			array( 
 				'site' => get_bloginfo('wpurl'), 
-				'base' => json_url(), 
+				'base' => get_bloginfo( 'wpurl') . '/' . rest_get_url_prefix() . '/wp/v2', 
 				'nonce' => wp_create_nonce( 'wp_json' ), 
 				'template_directory' => $template_directory 
 			) 
@@ -80,17 +80,21 @@ class WordPressAngularJS {
 }
 
 /** JSON REST API CHECK **/
-function angular_wpapi_check(){
-	if ( !is_plugin_active( 'json-rest-api/plugin.php' ) ) {
-		add_action( 'admin_notices', 'angular_wpapi_error' );
-	}
+function wpsd_check_dependencies() {
+    if ( ! defined( 'REST_API_VERSION' ) ) {
+        function wpsd_admin_notice() {
+            printf( '<div class="error"><p>%s</p></div>', __( 'Activate the WP REST API plugin.  It
+            is required.' ) );
+        }
+        add_action( 'admin_notices', 'angular_wpapi_error' );
+    }
 }
 
 function angular_wpapi_error(){
 	echo '<div class="error"><p><strong>JSON REST API</strong> must be installed and activated for the <strong>AngularJS for WP</strong> plugin to work properly - <a href="https://wordpress.org/plugins/json-rest-api/" target="_blank">Install Plugin</a></p></div>';
 }
 
-add_action('admin_init', 'angular_wpapi_check');
+add_action( 'admin_init', 'wpsd_check_dependencies', 99 );
 
 new WordPressAngularJS();
 ?>
