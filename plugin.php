@@ -13,7 +13,7 @@ require_once('includes/metaBox.php');
 require_once('includes/contentFilter.php');
 require_once('includes/shortcodes.php');
 
-define('WordPressAngularJS', '1.2');
+define('WordPressAngularJS', '2.0');
 
 class WordPressAngularJS {
 	function WordPressAngularJS(){
