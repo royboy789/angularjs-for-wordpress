@@ -1,5 +1,6 @@
 <?php
 function ngPosts( $atts ) {
+
 	$a = shortcode_atts( array(
 		// EMPTY DEFAULTS
 		'author_id' => '',
