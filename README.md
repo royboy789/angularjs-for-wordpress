@@ -43,7 +43,7 @@ Install Instructions
 =====================
 + Download / Pull All Files
 + Install Plugin from zip file 
-+ Download & Install the [WP API Plugin](http://wordpress.org/plugins/json-rest-api/) by Ryan McCue
++ Download & Install the [WP API Plugin](https://wordpress.org/plugins/rest-api/) by the REST API team.
 + Activate AngularJS for WordPress
 + Read [docs](http://www.roysivan.com/angularjs-for-wordpress) for how to use directives and templates
   
