@@ -21,7 +21,13 @@ angular_app.directive('ngPosts', ['$http', '$rootScope', function($http, $rootSc
 
 				if(filters.length > 0){
 					angular.forEach(filters, function(value, key){
-						$scope.baseURL = $scope.baseURL + 'filter['+ value.filter + ']=' + value.value + '&';
+						if( value.filter === 'posts_per_page' ){
+							$scope.baseURL = $scope.baseURL + 'per_page=' + value.value + '&';	
+						} else if( value.filter == 'page' ) {
+							$scope.baseURL = $scope.baseURL + 'page=' + value.value + '&';	
+						} else {
+							$scope.baseURL = $scope.baseURL + 'filter['+ value.filter + ']=' + value.value + '&';	
+						}
 					})
 				}
 				if(postType){
@@ -48,7 +54,7 @@ angular_app.directive('ngPosts', ['$http', '$rootScope', function($http, $rootSc
 			if($scope.orderBy) { $scope.filters.push({'filter': 'orderby', 'value': $scope.orderBy }); }
 			if($scope.search) { $scope.filters.push({'filter': 's', 'value': $scope.search}); }
 			if($scope.perPage) { $scope.filters.push({'filter': 'posts_per_page', 'value': $scope.perPage}); }
-			if($scope.page) { $scope.filters.push({'filter': 'posts_per_page', 'value': $scope.page}); }	
+			if($scope.page) { $scope.filters.push({'filter': 'page', 'value': $scope.page}); }	
 			
 			$scope.getPosts($scope.filters, $scope.postType);
 		},
