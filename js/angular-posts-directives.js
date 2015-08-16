@@ -103,17 +103,19 @@ angular_app.directive('ngNewPost', ['$http', '$rootScope', function($http, $root
 		controller: ['$scope', '$http', function($scope, $http) {
 			
 			$scope.chosenTax = [];
-      		if( !$scope.postType )
+      		if( !$scope.postType ) {
       			$scope.postType = 'post'
-      				
+      		}
 			$http.get( wpAngularVars.base + '/taxonomies' ).then(function(res) {
 				$scope.taxonomies = [];
 				angular.forEach( res.data, function( value, key ) {
-					if( value.types.hasOwnProperty($scope.postType) && value.name !== 'Format' )
-						$http.get( wpAngularVars.base + '/taxonomies/' + value.labels.name_admin_bar.toLowerCase() + '/terms' ).then(function(res){
+					if( value.types.indexOf($scope.postType) > -1 && value.name !== 'Format' ) {
+						$http.get( wpAngularVars.base + '/terms/' + value.labels.singular_name.toLowerCase() ).then(function(res){
+							console.log(res);
 							value.terms = res.data;
 							$scope.taxonomies.push( value );
 						});
+					}
 				});
 				
 			});
@@ -121,9 +123,9 @@ angular_app.directive('ngNewPost', ['$http', '$rootScope', function($http, $root
       			var form = jQuery('div.newPostFormWrapper form');
 	    		$scope.data = {
 	    			title: form.find('input[name="postTitle"]').val(),
-	    			content_raw: form.find('textarea[name="postContent"]').val(),
+	    			content: form.find('textarea[name="postContent"]').val(),
 	    			status: 'publish',
-	    			type: $scope.postType,
+	    			post_type: $scope.postType,
 	    			post_taxonomies: []
 	    		}
 	    		form.find('select').each(function(key, value) { 
@@ -135,13 +137,26 @@ angular_app.directive('ngNewPost', ['$http', '$rootScope', function($http, $root
 			    		});
 		    		}
 		    	});
-	    		$http.post(wpAngularVars.base + '/posts/?_wp_json_nonce=' + wpAngularVars.nonce, $scope.data).then(function(res){
+		    	var req = {
+			    	method: 'POST',
+			    	url: wpAngularVars.base + '/posts/',
+			    	headers: {
+				    	'X-WP-Nonce': wpAngularVars.nonce
+			    	},
+			    	data: $scope.data
+		    	};
+		    	
+		    	if( $scope.postType && $scope.postType !== 'posts' ) {
+			    	req.url = wpAngularVars.base + '/' + $scope.postType;
+		    	}
+	    		$http(req).then(function(res){
+		    		console.log(res);
 					if(res.data){
 						// After Submit Function - redirect | clear | hide
-						if(!$scope.afterSubmit) { window.location = wpAngularVars.site + '/?p=' + res.data.ID; }
+						if(!$scope.afterSubmit) { window.location = wpAngularVars.site + '/?p=' + res.data.id; }
 						if($scope.afterSubmit == 'redirect') {	
 							if(!$scope.redirectURL) {
-								window.location = wpAngularVars.site + '/?p=' + res.data.ID;
+								window.location = wpAngularVars.site + '/?p=' + res.data.id;
 							} else{
 								window.location = $scope.redirectURL;
 							}

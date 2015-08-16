@@ -3,7 +3,7 @@
  * Plugin Name: AngularJS for WordPress
  * Plugin URI: http://www.roysivan.com/angularjs-for-wordpress
  * Description: This plugin will allow you to easily load WordPress content client-side using AngularJS. JSON REST API required.
- * Version: 2.1
+ * Version: 3
  * Author: Roy Sivan
  * Author URI: http://www.roysivan.com
  * License: GPL2
@@ -16,7 +16,8 @@ require_once('includes/shortcodes.php');
 define('WordPressAngularJS', '2.0');
 
 class WordPressAngularJS {
-	function WordPressAngularJS(){
+	
+	function __init(){
 		global $wpdb;
 		add_action( 'wp_enqueue_scripts', array( $this, 'angularScripts' ) );
 		add_filter( 'json_insert_post', array( $this, 'post_add_tax' ), 10, 3 );
@@ -62,7 +63,7 @@ class WordPressAngularJS {
 		
 		$angularjs_for_wp_localize = array( 
 			'site' => get_bloginfo('wpurl'), 
-			'nonce' => wp_create_nonce( 'wp_json' ), 
+			'nonce' => wp_create_nonce( 'wp_rest' ), 
 			'template_directory' => $template_directory 
 		);
 		
@@ -92,19 +93,16 @@ class WordPressAngularJS {
 /** JSON REST API CHECK **/
 function angularjs_plugin_dep() {
     if ( ! defined( 'REST_API_VERSION' ) ) {
-        function wpsd_admin_notice() {
-            printf( '<div class="error"><p>%s</p></div>', __( 'Activate the WP REST API plugin.  It
-            is required.' ) );
-        }
         add_action( 'admin_notices', 'angular_wpapi_error' );
     }
 }
 
 function angular_wpapi_error(){
-	echo '<div class="error"><p><strong>JSON REST API</strong> must be installed and activated for the <strong>AngularJS for WP</strong> plugin to work properly - <a href="https://wordpress.org/plugins/json-rest-api/" target="_blank">Install Plugin</a></p></div>';
+	echo '<div class="error"><p><strong>JSON REST API</strong> must be installed and activated for the <strong>AngularJS for WP</strong> plugin to work properly - <a href="https://wordpress.org/plugins/rest-api/" target="_blank">Install Plugin</a></p></div>';
 }
 
 add_action( 'admin_init', 'angularjs_plugin_dep', 99 );
 
-new WordPressAngularJS();
+$wpNG = new WordPressAngularJS();
+$wpNG->__init();
 ?>
