@@ -155,6 +155,7 @@ angular_app.directive('ngNewPost', ['$http', '$rootScope', function($http, $root
 		    	if( $scope.postType && $scope.postType !== 'posts' ) {
 			    	req.url = wpAngularVars.base + '/' + $scope.postType;
 		    	}
+		    	
 	    		$http(req).then(function(res){
 		    		console.log(res);
 					if(res.data){
