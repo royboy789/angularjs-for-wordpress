@@ -20,7 +20,7 @@ class WordPressAngularJS {
 	function __init(){
 		global $wpdb;
 		add_action( 'wp_enqueue_scripts', array( $this, 'angularScripts' ) );
-		add_filter( 'json_insert_post', array( $this, 'post_add_tax' ), 10, 3 );
+		add_filter( 'rest_api_init', array( $this, 'post_add_tax_register' ), 10, 3 );
 	}
 
 	function angularScripts() {
@@ -83,10 +83,24 @@ class WordPressAngularJS {
 		);
 	}
 	
-	function post_add_tax( $post, $data, $update ) {
-		foreach( $data['post_taxonomies'] as $term => $tax ){
-			wp_set_post_terms( $post['ID'], array( intval( $term ) ), $tax, true );	        
-	    }	    
+	function post_add_tax_register() {
+		
+		register_api_field( 'post',
+			'post_taxonomies',
+			array(
+				'update_callback' => array( $this, 'post_add_tax' ),
+				'schema' 		  => null,
+			)
+		);
+		
+	}
+	
+	function post_add_tax( $value, $object, $field_name ) {
+		//var_dump( $value );
+		foreach( $value as $term => $tax ){
+			var_dump( wp_set_post_terms( $object->ID, array( intval( $term ) ), $tax, true ) );
+	    }
+	    
 	}
 }
 

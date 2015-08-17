@@ -116,7 +116,7 @@ angular_app.directive('ngNewPost', ['$http', '$rootScope', function($http, $root
 				$scope.taxonomies = [];
 				angular.forEach( res.data, function( value, key ) {
 					if( value.types.indexOf($scope.postType) > -1 && value.name !== 'Format' ) {
-						$http.get( wpAngularVars.base + '/terms/' + value.labels.singular_name.toLowerCase() ).then(function(res){
+						$http.get( wpAngularVars.base + '/terms/' + value.slug.toLowerCase() ).then(function(res){
 							console.log(res);
 							value.terms = res.data;
 							$scope.taxonomies.push( value );
@@ -137,9 +137,10 @@ angular_app.directive('ngNewPost', ['$http', '$rootScope', function($http, $root
 	    		form.find('select').each(function(key, value) { 
 		    		if( jQuery(this).val() ) {
 			    		var tax = jQuery(this).data('tax'),
-			    		terms = jQuery(this).val();
-			    		jQuery.each(terms, function( key, term ) {
-			    			$scope.data.post_taxonomies[term] = tax;
+			    		selected = jQuery(this).find(':selected');
+			    		jQuery.each(selected, function( key, select ) {
+				    		var term = jQuery( select ).val();
+			    			$scope.data.post_taxonomies[term] = tax
 			    		});
 		    		}
 		    	});
