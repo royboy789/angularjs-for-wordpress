@@ -12,6 +12,7 @@ function ngPosts( $atts ) {
 		'post_type' => 'post',
 		'search' => '',
 		'per_page' => '',
+		'page' => '',
 	), $atts );
 	
 	$vars = '';

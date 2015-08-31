@@ -3,7 +3,7 @@
  * Plugin Name: AngularJS for WordPress
  * Plugin URI: http://www.roysivan.com/angularjs-for-wordpress
  * Description: This plugin will allow you to easily load WordPress content client-side using AngularJS. JSON REST API required.
- * Version: 2.1
+ * Version: 3.0.0
  * Author: Roy Sivan
  * Author URI: http://www.roysivan.com
  * License: GPL2
@@ -16,10 +16,13 @@ require_once('includes/shortcodes.php');
 define('WordPressAngularJS', '2.0');
 
 class WordPressAngularJS {
-	function WordPressAngularJS(){
-		global $wpdb;
+	
+	function __init(){
+		
+		global $wpdb;		
 		add_action( 'wp_enqueue_scripts', array( $this, 'angularScripts' ) );
-		add_filter( 'json_insert_post', array( $this, 'post_add_tax' ), 10, 3 );
+		add_filter( 'rest_api_init', array( $this, 'post_add_tax_register' ), 10, 3 );
+		
 	}
 
 	function angularScripts() {
@@ -62,7 +65,7 @@ class WordPressAngularJS {
 		
 		$angularjs_for_wp_localize = array( 
 			'site' => get_bloginfo('wpurl'), 
-			'nonce' => wp_create_nonce( 'wp_json' ), 
+			'nonce' => wp_create_nonce( 'wp_rest' ), 
 			'template_directory' => $template_directory 
 		);
 		
@@ -82,29 +85,51 @@ class WordPressAngularJS {
 		);
 	}
 	
-	function post_add_tax( $post, $data, $update ) {
-		foreach( $data['post_taxonomies'] as $term => $tax ){
-			wp_set_post_terms( $post['ID'], array( intval( $term ) ), $tax, true );	        
-	    }	    
+	function post_add_tax_register() {
+		
+		
+		$post_types = get_post_types( array( 'public' => true, 'exclude_from_search' => false ), 'names' );
+		
+		foreach( $post_types as $cpt ) {
+			if( $cpt === 'attachment' ) { continue; }
+			register_api_field( $cpt,
+				'post_taxonomies',
+				array(
+					'update_callback' => array( $this, 'post_add_tax' ),
+					'schema' 		  => null,
+				)
+			);
+		}
+		
+	}
+	
+	function post_add_tax( $value, $object, $field_name ) {
+		//var_dump( $value );
+		foreach( $value as $term => $tax ){
+			wp_set_post_terms( $object->ID, array( intval( $term ) ), $tax, true );
+	    }
+	    
 	}
 }
 
 /** JSON REST API CHECK **/
 function angularjs_plugin_dep() {
     if ( ! defined( 'REST_API_VERSION' ) ) {
-        function wpsd_admin_notice() {
-            printf( '<div class="error"><p>%s</p></div>', __( 'Activate the WP REST API plugin.  It
-            is required.' ) );
-        }
         add_action( 'admin_notices', 'angular_wpapi_error' );
     }
 }
 
 function angular_wpapi_error(){
-	echo '<div class="error"><p><strong>JSON REST API</strong> must be installed and activated for the <strong>AngularJS for WP</strong> plugin to work properly - <a href="https://wordpress.org/plugins/json-rest-api/" target="_blank">Install Plugin</a></p></div>';
+	echo '<div class="error"><p><strong>JSON REST API</strong> must be installed and activated for the <strong>AngularJS for WP</strong> plugin to work properly - <a href="https://wordpress.org/plugins/rest-api/" target="_blank">Install Plugin</a></p></div>';
 }
 
 add_action( 'admin_init', 'angularjs_plugin_dep', 99 );
 
-new WordPressAngularJS();
+/** LOAD PLUGIN **/
+
+$wpNG = new WordPressAngularJS();
+add_action( 'init', array( $wpNG, '__init' ), 1000 );
+
+
+
 ?>
