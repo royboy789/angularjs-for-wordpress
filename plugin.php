@@ -18,9 +18,11 @@ define('WordPressAngularJS', '2.0');
 class WordPressAngularJS {
 	
 	function __init(){
-		global $wpdb;
+		
+		global $wpdb;		
 		add_action( 'wp_enqueue_scripts', array( $this, 'angularScripts' ) );
 		add_filter( 'rest_api_init', array( $this, 'post_add_tax_register' ), 10, 3 );
+		
 	}
 
 	function angularScripts() {
@@ -85,20 +87,26 @@ class WordPressAngularJS {
 	
 	function post_add_tax_register() {
 		
-		register_api_field( 'post',
-			'post_taxonomies',
-			array(
-				'update_callback' => array( $this, 'post_add_tax' ),
-				'schema' 		  => null,
-			)
-		);
+		
+		$post_types = get_post_types( array( 'public' => true, 'exclude_from_search' => false ), 'names' );
+		
+		foreach( $post_types as $cpt ) {
+			if( $cpt === 'attachment' ) { continue; }
+			register_api_field( $cpt,
+				'post_taxonomies',
+				array(
+					'update_callback' => array( $this, 'post_add_tax' ),
+					'schema' 		  => null,
+				)
+			);
+		}
 		
 	}
 	
 	function post_add_tax( $value, $object, $field_name ) {
 		//var_dump( $value );
 		foreach( $value as $term => $tax ){
-			var_dump( wp_set_post_terms( $object->ID, array( intval( $term ) ), $tax, true ) );
+			wp_set_post_terms( $object->ID, array( intval( $term ) ), $tax, true );
 	    }
 	    
 	}
@@ -117,6 +125,11 @@ function angular_wpapi_error(){
 
 add_action( 'admin_init', 'angularjs_plugin_dep', 99 );
 
+/** LOAD PLUGIN **/
+
 $wpNG = new WordPressAngularJS();
-$wpNG->__init();
+add_action( 'init', array( $wpNG, '__init' ), 1000 );
+
+
+
 ?>
